@@ -1,0 +1,5 @@
+Spring AI Alibaba 是一个基于 Spring AI 的阿里云集成框架。
+它支持多种大语言模型的调用，包括通义千问、DeepSeek 等。
+框架提供了 ChatClient、ChatModel 等核心抽象，支持流式响应、结构化输出和对话记忆。
+Advisor 模式是 Spring AI 的核心扩展机制，可以在请求前后插入自定义逻辑。
+MessageChatMemoryAdvisor 提供了基于 JDBC 的对话记忆持久化能力。

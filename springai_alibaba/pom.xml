@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>zysf.iflytek</groupId>
+    <artifactId>springai_alibaba</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>springai_alibaba</name>
+    <description>springai_alibaba</description>
+
+    <packaging>pom</packaging>
+
+    <modules>
+        <module>quick-start</module>
+        <module>ollma-demo</module>
+    </modules>
+
+    <properties>
+        <java.version>17</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <spring-boot.version>3.5.8</spring-boot.version>
+        <lombok.version>1.18.30</lombok.version>
+        <spring-ai-alibaba.version>1.1.0.0-M5</spring-ai-alibaba.version>
+        <spring-ai-ollama.version>1.1.0-M4</spring-ai-ollama.version>
+
+        <spring-ai-chat-memory-jdbc.version>1.1.0-M4</spring-ai-chat-memory-jdbc.version>
+        <mysql.version>8.0.33</mysql.version>
+
+        <!-- 添加编译器插件版本 -->
+        <maven.compiler.plugin.version>3.11.0</maven.compiler.plugin.version>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring-boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.alibaba.cloud.ai</groupId>
+                <artifactId>spring-ai-alibaba-starter-dashscope</artifactId>
+                <version>${spring-ai-alibaba.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-model-ollama -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-starter-model-ollama</artifactId>
+                <version>${spring-ai-ollama.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/org.springframework.ai/spring-ai-starter-model-chat-memory-repository-jdbc -->
+            <dependency>
+                <groupId>org.springframework.ai</groupId>
+                <artifactId>spring-ai-starter-model-chat-memory-repository-jdbc</artifactId>
+                <version>${spring-ai-chat-memory-jdbc.version}</version>
+            </dependency>
+
+            <!-- https://mvnrepository.com/artifact/com.mysql/mysql-connector-j -->
+            <dependency>
+                <groupId>com.mysql</groupId>
+                <artifactId>mysql-connector-j</artifactId>
+                <version>${mysql.version}</version>
+            </dependency>
+
+
+        </dependencies>
+    </dependencyManagement>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>${maven.compiler.plugin.version}</version>
+                <configuration>
+                    <!-- 修改为与 java.version 一致 -->
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <encoding>UTF-8</encoding>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>${spring-boot.version}</version>
+                <configuration>
+                    <mainClass>zysf.iflytek.springai_alibaba.SpringaiAlibabaApplication</mainClass>
+                    <skip>true</skip>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>repackage</id>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>
