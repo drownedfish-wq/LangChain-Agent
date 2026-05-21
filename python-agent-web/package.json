@@ -1,0 +1,12 @@
+{
+  "name": "python-agent-web",
+  "version": "1.0.0",
+  "description": "本地智能体平台 - 前端（前后端分离版）",
+  "scripts": {
+    "dev": "http-server . -p 3000 -c-1 --cors",
+    "start": "http-server . -p 3000 -c-1 --cors"
+  },
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
+}

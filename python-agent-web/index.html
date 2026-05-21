@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>本地智能体平台</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- 左侧边栏 -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>智能体平台</h2>
+                <button class="btn-new-chat" onclick="createNewChat()">+ 新对话</button>
+            </div>
+            <div class="chat-list" id="chatList">
+                <!-- 动态填充会话列表 -->
+            </div>
+            <div class="sidebar-footer">
+                <div class="model-info">
+                    <span class="model-badge" id="modelBadge">qwen2.5:3b</span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- 主聊天区域 -->
+        <main class="chat-main">
+            <!-- 顶部栏 -->
+            <div class="chat-header">
+                <button class="btn-toggle-sidebar" onclick="toggleSidebar()">☰</button>
+                <div class="mode-tabs">
+                    <button class="mode-tab active" data-mode="chat" onclick="switchMode('chat')">💬 对话</button>
+                    <button class="mode-tab" data-mode="tool" onclick="switchMode('tool')">🔧 工具智能体</button>
+                    <button class="mode-tab" data-mode="rag" onclick="switchMode('rag')">📚 RAG问答</button>
+                </div>
+                <div class="backend-status" id="backendStatus" title="后端连接状态">🟢</div>
+            </div>
+
+            <!-- 消息区域 -->
+            <div class="chat-messages" id="chatMessages">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="welcome-icon">🤖</div>
+                    <h1>本地智能体平台</h1>
+                    <p>基于 LangChain + Ollama，支持工具调用与 RAG</p>
+                    <p class="hint">前端端口 3000 | 后端端口 8000</p>
+                    <div class="quick-actions">
+                        <button class="quick-btn" onclick="sendQuick('你好，请介绍一下你自己')">👋 打个招呼</button>
+                        <button class="quick-btn" onclick="switchMode('tool');sendQuick('帮我算一下 (15+27)*3')">🧮 数学计算</button>
+                        <button class="quick-btn" onclick="switchMode('tool');sendQuick('北京今天天气怎么样？')">🌤️ 查天气</button>
+                        <button class="quick-btn" onclick="switchMode('rag');sendQuick('Spring AI Alibaba 是什么？')">📚 RAG问答</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- RAG 配置栏（仅在 RAG 模式显示） -->
+            <div class="rag-config" id="ragConfig" style="display:none;">
+                <label>知识库：</label>
+                <input type="text" id="ragCollection" value="default" placeholder="知识库名称">
+                <button class="btn-small" onclick="uploadFileToRAG()">📄 上传文件</button>
+                <input type="file" id="ragFileInput" style="display:none" accept=".txt,.md,.pdf" onchange="handleFileUpload(event)">
+            </div>
+
+            <!-- 输入区域 -->
+            <div class="chat-input-area">
+                <div class="input-wrapper">
+                    <textarea id="userInput" placeholder="输入消息... (Enter 发送, Shift+Enter 换行)" rows="1" onkeydown="handleKeyDown(event)" oninput="autoResize(this)"></textarea>
+                    <button class="btn-send" id="sendBtn" onclick="sendMessage()">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/></svg>
+                    </button>
+                </div>
+                <!-- 功能工具栏 -->
+                <div class="input-toolbar">
+                    <div class="toolbar-left">
+                        <!-- 模型选择 -->
+                        <div class="toolbar-item model-selector">
+                            <select id="modelSelect" onchange="switchModel(this.value)" title="切换模型">
+                                <option value="qwen2.5:3b">qwen2.5:3b</option>
+                            </select>
+                        </div>
+                        <!-- 文件上传 -->
+                        <button class="toolbar-btn" onclick="document.getElementById('fileInput').click()" title="上传文件">
+                            📎
+                        </button>
+                        <input type="file" id="fileInput" style="display:none" accept=".txt,.md,.pdf,.py,.java,.json,.csv" onchange="handleFileUploadAction(event)">
+                        <!-- 语音输入 -->
+                        <button class="toolbar-btn" id="voiceBtn" onclick="toggleVoiceInput()" title="语音输入">
+                            🎤
+                        </button>
+                        <!-- 深度思考 -->
+                        <button class="toolbar-btn" id="deepThinkBtn" onclick="toggleDeepThink()" title="深度思考模式">
+                            🧠
+                        </button>
+                    </div>
+                    <div class="toolbar-right">
+                        <span class="toolbar-status" id="toolbarStatus"></span>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>
